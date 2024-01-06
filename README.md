@@ -1,2 +1,2 @@
-# acs-2024-01
+# Advanced Computer Science
 acs-2024-01
