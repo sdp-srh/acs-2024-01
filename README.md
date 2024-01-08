@@ -1,5 +1,19 @@
 # Advanced Computer Science
 This repository contains different examples for cloud projects based on Google Cloud Platform.
+# Tools
+### GitHub Desktop
+https://desktop.github.com/ 
+
+### VS Code
+https://code.visualstudio.com/ 
+
+### node.js
+https://nodejs.org/en/ 
+Runtime for Javascript
+
+https://www.npmjs.com/ 
+Libraries for node.js
+
 
 # Create a node.js project
 ## Init the project
