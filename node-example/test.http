@@ -1,0 +1,3 @@
+### test greeting
+
+GET http://localhost:3000/greet/Paul
