@@ -1,3 +1,22 @@
+@name = Paul
+@server=http://localhost:3000
+
 ### test greeting
 
-GET http://localhost:3000/greet/Paul
+GET {{server}}/greet/{{name}}
+
+
+### test get mail
+GET http://localhost:3000/mail/
+
+
+### test send mail
+POST http://localhost:3000/mail/
+Content-Type: application/json
+    
+{
+    "to": "paul.tanzer@live.de",
+    "subject": "Test",
+    "text": "Test Text"
+}
+
