@@ -1,0 +1,42 @@
+[
+  {
+    "id": "5cac1371-eee3-4680-8a42-d5ee8d06c5e3",
+    "startDate": "2022-10-22",
+    "matchDay": 7,
+    "team1": "9a664089-2e4b-4c56-af71-5b96d2c9d187",
+    "team2": "25ae03be-8b74-4443-9b3c-71737566c567",
+    "finished": true,
+    "goals1": 3,
+    "goals2": 1
+  },
+  {
+    "id": "30def128-0089-4272-96f3-e80f5e3c6379",
+    "startDate": "2022-11-29",
+    "matchDay": 9,
+    "team1": "25ae03be-8b74-4443-9b3c-71737566c567",
+    "team2": "9a664089-2e4b-4c56-af71-5b96d2c9d187",
+    "finished": true,
+    "goals1": 0,
+    "goals2": 2
+  },
+  {
+    "id": "6859db77-a77e-4b19-bb99-9f33bbbd1748",
+    "startDate": "2023-02-02",
+    "matchDay": 12,
+    "team1": "9a664089-2e4b-4c56-af71-5b96d2c9d187",
+    "team2": "d389b8d3-254a-4925-8fb5-667520035eaf",
+    "finished": false,
+    "goals1": -1,
+    "goals2": -1
+  },
+  {
+    "id": "3858c2d0-eba3-4cab-822b-722c123b2fe4",
+    "startDate": "2023-02-07",
+    "matchDay": 13,
+    "team1": "25ae03be-8b74-4443-9b3c-71737566c567",
+    "team2": "d389b8d3-254a-4925-8fb5-667520035eaf",
+    "finished": false,
+    "goals1": -1,
+    "goals2": -1
+  }
+]

@@ -1,0 +1,80 @@
+@server = http://localhost:3000
+@newmatchid = 2f648c72-45ac-4be0-a259-12340f3472f1
+
+
+### test the app
+GET {{server}}/
+
+### read all teams
+GET {{server}}/team
+
+### read a specific team
+GET {{server}}/team/25ae03be-8b74-4443-9b3c-71737566c567
+
+### read all matches
+GET {{server}}/match
+
+### read all match with id
+GET {{server}}/match/{{newmatchid}}
+
+### create a new match
+POST {{server}}/match
+Content-Type: application/json
+
+  {
+    "id": "{{newmatchid}}",
+    "startDate": "2023-04-06",
+    "matchDay": 15,
+    "team1": "d389b8d3-254a-4925-8fb5-667520035eaf",
+    "team2": "9a664089-2e4b-4c56-af71-5b96d2c9d187",
+    "finished": false,
+    "goals1": -1,
+    "goals2": -1
+  }
+
+### UPDATE match with a new data
+PATCH {{server}}/match/{{newmatchid}}
+Content-Type: application/json
+
+  {
+    "startDate": "2023-04-10"
+  }
+
+### add a result to a match
+PUT {{server}}/addresult
+Content-Type: application/json
+
+  {
+    "id": "{{newmatchid}}",
+    "goals1": 8,
+    "goals2": 7
+  }
+
+### delete match with id
+DELETE {{server}}/match/{{newmatchid}}
+
+
+### options of root
+OPTIONS {{server}}/
+
+### Head of root
+HEAD {{server}}/
+
+
+### GET of root
+GET {{server}}/
+
+### options of match endpoint
+OPTIONS {{server}}/match/
+
+
+### find matches
+GET {{server}}/findmatches?term=FC
+
+
+### find matchew with id
+GET {{server}}/findmatches?term=eintracht
+
+
+### find matchew with id
+GET {{server}}/findteams?term=frank
