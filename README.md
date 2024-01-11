@@ -14,6 +14,12 @@ Runtime for Javascript
 https://www.npmjs.com/ 
 Libraries for node.js
 
+# Existing projects
+### node_examples
+just some small examples  
+
+### soccer
+implementation of the soccer app
 
 # Create a node.js project
 ## Init the project
