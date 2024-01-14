@@ -1,0 +1,17 @@
+{
+  "name": "testsrv",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Paul Tanzer",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/bigquery": "^6.2.0",
+    "@google-cloud/translate": "^7.0.5",
+    "express": "^4.18.2"
+  }
+}

@@ -1,0 +1,25 @@
+# local server
+@server = http://localhost:3000
+# productive instance
+# @server = https://xyz
+
+### translate to english
+POST {{server}}/api/de2en
+Content-Type: application/json
+
+  {
+    "source": "Willkommen. Dies ist ein deutscher Text zum Testen der Übersetzung"
+  }
+
+
+### translate to german
+POST {{server}}/api/en2de
+Content-Type: application/json
+
+  {
+    "source": "Good afternoon. This text will be translated to German."
+  }
+
+
+### get google trends
+GET {{server}}/api/google-trends
