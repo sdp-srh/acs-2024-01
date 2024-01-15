@@ -72,7 +72,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/info', (req, res) => {
-  res.send('<html><body><h3>ACS - Soccer App</h3><p>Version 1.0</p></body></html>')
+  res.send('<html><body><h3>ACS - Soccer App</h3><p>Version 1.1</p></body></html>')
 })
 /**
  * team endpoints
