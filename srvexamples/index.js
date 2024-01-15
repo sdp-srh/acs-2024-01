@@ -27,8 +27,7 @@ app.post('/api/de2en', async (req, res) => {
   const source = req.body.source
   const translate = new Translate()
   const options = {from: 'de', to: 'en'}
-  const [translation] = await translate.translate(source, options);
-  console.log(translation)
+  const [translation] = await translate.translate(source, options)
   res.send({translation: translation})
 })
 
@@ -36,12 +35,9 @@ app.post('/api/de2en', async (req, res) => {
 //  translation post endpoint for english to german
 app.post('/api/en2de', async (req, res) => {
   const source = req.body.source
-  /*
   const translate = new Translate()
   const options = {from: 'en', to: 'de'}
   const [translation] = await translate.translate(source, options);
-  */
-  const translation = 'Hallo Welt'
   res.send({translation: translation})
 })
 
