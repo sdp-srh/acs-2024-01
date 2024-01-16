@@ -1,0 +1,2 @@
+### call the function locally for testing
+GET http://localhost:8080/
