@@ -1,0 +1,12 @@
+{
+  "name": "js-examples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "promise": "node promise.js",
+    "async": "node asynchronous.js"
+  },
+  "author": "",
+  "license": "ISC"
+}

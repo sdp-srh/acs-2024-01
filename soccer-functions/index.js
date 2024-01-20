@@ -1,3 +1,4 @@
+// importing the libraries for cloud functions
 const functions = require('@google-cloud/functions-framework');
 const axios = require('axios')
 // const { Firestore } = require('@google-cloud/firestore')
