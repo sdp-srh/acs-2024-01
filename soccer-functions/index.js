@@ -15,7 +15,6 @@ const loadTeamData = async (firestore) => {
   const teamsCollection = await firestore.collection(`teams`)
   console.log(teams[0])
   for (const team of teams) {
-    
     await teamsCollection.doc(''+team.teamId).set(team)
   }
   console.log(`${teams.length} teams stored to firestore`) 
@@ -38,6 +37,7 @@ const loadMatchData = async (firestore) => {
 functions.http('load-openliga-data', async (req, res) => {
   const start = Date.now()
   console.log('load openliga data called')
+  
   /*
   const teamResponse = await axios.get(`https://www.openligadb.de/api/getavailableteams/${league}/${season}`)
   const teams = teamResponse.data
@@ -53,7 +53,7 @@ functions.http('load-openliga-data', async (req, res) => {
   res.send({status:'OK', message: message })
   */
 
-  /*
+  
   const firestore = new Firestore()
   const teamsCount = await loadTeamData(firestore)
   const matchesCount = await loadMatchData(firestore)
@@ -62,8 +62,8 @@ functions.http('load-openliga-data', async (req, res) => {
   const end = Date.now()
   console.log(`Duration: ${end-start} ms`)
   res.send({status:'OK', message: message })
-  */
   
+  /*
   const firestore = new Firestore()
   const [teamsCount, matchesCount] = await Promise.all([loadTeamData(firestore), loadMatchData(firestore)]);
   let message = `Loaded matches (${matchesCount}), teams (${teamsCount})`
@@ -71,7 +71,7 @@ functions.http('load-openliga-data', async (req, res) => {
   const end = Date.now()
   console.log(`Duration: ${end-start} ms`)
   res.send({status:'OK', message: message })
-  
+  */
 
   /* // additional example with then
       Promise.all([loadTeams(), loadMatches()])
