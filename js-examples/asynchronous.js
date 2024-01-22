@@ -33,6 +33,6 @@ const sequentialExecution = async () => {
 // Execute both functions
 (async () => {
     await sequentialExecution();
-    await parallelExecution();
+    //await parallelExecution();
     
 })();

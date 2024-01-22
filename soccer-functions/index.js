@@ -53,7 +53,7 @@ functions.http('load-openliga-data', async (req, res) => {
   res.send({status:'OK', message: message })
   */
 
-  
+  /*
   const firestore = new Firestore()
   const teamsCount = await loadTeamData(firestore)
   const matchesCount = await loadMatchData(firestore)
@@ -62,8 +62,8 @@ functions.http('load-openliga-data', async (req, res) => {
   const end = Date.now()
   console.log(`Duration: ${end-start} ms`)
   res.send({status:'OK', message: message })
+  */
   
-  /*
   const firestore = new Firestore()
   const [teamsCount, matchesCount] = await Promise.all([loadTeamData(firestore), loadMatchData(firestore)]);
   let message = `Loaded matches (${matchesCount}), teams (${teamsCount})`
@@ -71,7 +71,7 @@ functions.http('load-openliga-data', async (req, res) => {
   const end = Date.now()
   console.log(`Duration: ${end-start} ms`)
   res.send({status:'OK', message: message })
-  */
+
 
   /* // additional example with then
       Promise.all([loadTeams(), loadMatches()])

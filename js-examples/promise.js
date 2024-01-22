@@ -58,7 +58,7 @@ const fetchWithAsyncAwait = async (url) => {
 }
 
 const run = async () => {
-    await fetchWithThen('https://jsonplaceholder.typicode.com/todos/1');
+    // await fetchWithThen('https://jsonplaceholder.typicode.com/todos/1');
     await fetchWithAsyncAwait('https://jsonplaceholder.typicode.com/todos/2');
 }
 
