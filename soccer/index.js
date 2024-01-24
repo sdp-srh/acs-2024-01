@@ -6,6 +6,8 @@
 // include libraries for microservices and file handling
 const express = require('express')
 
+const { Firestore } = require('@google-cloud/firestore')
+const { readMatches, readTeams } = require('./db')
 
 const fs = require('fs')
 const path = require('path')
@@ -79,7 +81,18 @@ app.get('/info', (req, res) => {
  */
 
 // gets all teams
+/*
 app.get('/team', (req, res) => {
+  res.send(teams)
+})
+*/
+
+// gets all teams
+app.get('/team', async (req, res) => {
+  const firestore = new Firestore()
+  const snapshot = await firestore.collection('teams').get()
+  // convert the docs to teams objects
+  const teams = snapshot.docs.map(doc => doc.data())
   res.send(teams)
 })
 
@@ -96,7 +109,14 @@ app.get('/team/:id', (req, res) => {
 /**
  * match endpoints
  */
+/*
 app.get('/match', (req,res) => {
+  res.send(matches)
+})
+*/
+
+app.get('/match', async (req,res) => {
+  const matches = await readMatches()
   res.send(matches)
 })
 
