@@ -13,7 +13,6 @@ const readMatches = async () => {
 	const snapshot = await firestore.collection('matches').get()
 	const matches = snapshot.docs.map(doc => doc.data())
 	return matches
-
 }
 
 module.exports = { readTeams, readMatches }

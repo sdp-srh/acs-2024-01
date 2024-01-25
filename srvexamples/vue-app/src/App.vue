@@ -1,6 +1,6 @@
 
 <template>
-  <Start menutitle="Examples"/>  
+  <Start menutitle="Examples for Microservices"/>  
 </template>
 
 <script>
