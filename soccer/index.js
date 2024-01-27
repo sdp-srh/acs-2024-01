@@ -7,10 +7,12 @@
 const express = require('express')
 
 const { Firestore } = require('@google-cloud/firestore')
-const { readMatches, readTeams } = require('./db')
+const { readMatches, readTeams, readRankings, readStatus } = require('./db')
 
 const fs = require('fs')
 const path = require('path')
+
+
 
 
 // start express app
@@ -19,7 +21,7 @@ const port = process.env.PORT || 3000
 // include body parser for easier handling of json in the request
 app.use(express.json())
 
-// app.use(express.static(path.join(__dirname, 'public')))
+ app.use(express.static(path.join(__dirname, 'public')))
 
 // set the correct header information
 app.use((req, res, next) => {
@@ -64,9 +66,9 @@ app.options('/api/addresult', (req, res, next) => {
 // formatting of the responses
 app.set('json spaces', 2);
 
-// data required on the server (currently used because there is no database)
-let teams = []
-let matches = []
+// will be replaced by db caching
+// let teams = []
+//let matches = []
 
 // 
 app.get('/api/', (req, res) => {
@@ -89,8 +91,13 @@ app.get('/team', (req, res) => {
 
 // gets all teams
 app.get('/api/team', async (req, res) => {
-  if (!teams.length) teams = await readTeams()
+  const teams = await readTeams()
   res.send(teams)
+})
+
+app.get('/api/status', async (req, res) => {
+  const status = await readStatus()
+  res.send(status)
 })
 
 
@@ -98,10 +105,16 @@ app.get('/api/team', async (req, res) => {
 app.get('/api/team/:id', (req, res) => {
   const requestId = req.params.id
   console.log(`Looking for Team with id: ${requestId}`)
+  const teams = readTeams()
   const result = teams.find(team => team.id === requestId)
   res.send(result)
 })
 
+
+app.get('/api/ranking', async (req, res) => {
+  const entries = await readRankings()
+  res.send(entries)
+})
 
 /**
  * match endpoints
@@ -113,20 +126,22 @@ app.get('/match', (req,res) => {
 */
 
 app.get('/api/match', async (req,res) => {
-  if (!matches.length) matches = await readMatches()
+  const matches = await readMatches()
   //const matches = await readMatches()
   res.send(matches)
 })
 
 
 // find a team with an ID
-app.get('/api/match/:id', (req, res) => {
+app.get('/api/match/:id', async (req, res) => {
   const requestId = req.params.id
-  console.log(`Looking for Team with id: ${requestId}`)
+  console.log(`Looking for Match with id: ${requestId}`)
+  const matches = await readMatches()
   const result = matches.find(match => match.id === requestId)
   res.send(result)
 })
 
+/*
 // creates a new match
 app.post('/api/match', (req, res) => {
   const newMatch = req.body
@@ -143,6 +158,7 @@ app.patch('/api/match/:id', (req, res) => {
   match = {...match, ...newValues}
   res.send(match)
 })
+
 
 // updates a match with new values
 app.put('/api/addresult/', (req, res) => {
@@ -162,10 +178,12 @@ app.delete('/api/match/:id', (req, res) => {
     res.send(`Removed: ${req.params.id}`)
   }
 })
+*/
 
 // finds matches based on the team names and the start data by string matching
-app.get('/api/findmatches', (req, res) => {
+app.get('/api/findmatches', async (req, res) => {
   const term = req.query.term
+  const matches = await readMatches()
   const results = matches.filter(match => {
     if (match.startDate.toLowerCase().includes(term.toLowerCase())) return true
     const name1 = teams.find(team => team.id = match.team1)
@@ -179,7 +197,8 @@ app.get('/api/findmatches', (req, res) => {
 
 
 // finds teams based on the name (ignores upper and lower case)
-app.get('/api/findteams', (req, res) => {
+app.get('/api/findteams', async (req, res) => {
+  const teams = await readTeams()
   const term = req.query.term
   const results = teams.filter(team => team.name.toLowerCase().includes(term.toLowerCase()) )
   res.send(results)
@@ -190,10 +209,6 @@ app.get('/api/findteams', (req, res) => {
  */
 app.listen(port, () => {
   console.log(`Soccer app is starting at ${port}`)
-  /*
-  loadTeams()
-  loadMatches() 
-  */
   console.log('Soccer app running')
 })
 

@@ -37,15 +37,14 @@
       {#each teams as team}
         <div class="card w-96 bg-base-100 shadow-xl shadow-visible border border-main">
           <div>
-            <figure><img src={team.teamIconUrl} alt="Icon" width="160px" height="160px"/></figure>
+            <figure><img class="card-img" src={team.teamIconUrl} alt="Icon"/></figure>
           </div>
           <div class="card-body">
-            <h2 >{team.teamName}</h2>
-            <h3>Last Game</h3>
-            <p>{getLastMatchInfo(team)}</p>
-            <h3>Next Game</h3>
-            <p>Opponent: {getNextMatchInfo(team).nextOpponent}<br/> 
-            Date: {getNextMatchInfo(team).nextDate}</p> 
+            <h2>{team.teamName}</h2>
+            <div class="card-subheader">Last Game</div>
+            <div class="card-text">{getLastMatchInfo(team)}</div>
+            <div class="card-subheader">Next Game</div>
+            <div class="card-text">Opponent: {getNextMatchInfo(team).nextOpponent}<br/>Date: {getNextMatchInfo(team).nextDate}</div>
           </div>
         </div>
       {/each}
@@ -57,10 +56,26 @@
 
 <style>
     
-      .card-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap:10px;
-      }
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap:10px;
+  }
+
+  .card-img {
+    height: 11em; /* Sets the icon height to match the font size of the text */
+    width: 11em; /* Sets the icon width to match the font size of the text */
+    vertical-align: middle;
+  }      
+
+  .card-subheader {
+    font-size: 1.2em;
+    color: var(--daisy-text-primary);
+  }
+
+  .card-text {
+    font-size: 0.9em;
+    color: var(--text-secondary);
+  }
   
 </style>

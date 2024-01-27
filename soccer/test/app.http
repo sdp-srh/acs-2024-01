@@ -8,11 +8,17 @@ GET {{server}}/api/
 ### read all teams
 GET {{server}}/api/team
 
+### read all teams
+GET {{server}}/api/status
+
 ### read a specific team
 GET {{server}}/api/team/25ae03be-8b74-4443-9b3c-71737566c567
 
 ### read all matches
 GET {{server}}/api/match
+
+### read all matches
+GET {{server}}/api/ranking
 
 ### read all match with id
 GET {{server}}/api/match/{{newmatchid}}

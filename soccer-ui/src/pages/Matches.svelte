@@ -5,13 +5,19 @@
   let allMatches = []
   let matchDays = []
   let selectedMatchDay = {}
+  let olStatus = {}
   onMount(async () => {
     const res = await fetch('/api/match')
     allMatches = await res.json()
-    
     matchDays = createMatchDays()
     selectedMatchDay = matchDays[0].day
-    matches = allMatches.filter(m => m.group.groupOrderID == selectedMatchDay)
+    matches = matches = getMatchesForDay(selectedMatchDay)
+    // get the status and the current matchday
+    const olStatusResponse = await fetch('/api/status')
+    olStatus = await olStatusResponse.json()
+    console.log(olStatus);
+    selectedMatchDay = matchDays.find(d => d.day == olStatus.groupOrderID).day
+    matches = getMatchesForDay(selectedMatchDay)
   })
 
   const createMatchDays = () => {
@@ -26,6 +32,15 @@
     return matchDays
   }
 
+  const getMatchesForDay = (number) => {
+    const matchesPerDay = allMatches.filter(m => m.group.groupOrderID == number)
+    matchesPerDay.sort((a, b) => {
+      if (a.matchDateTimeUTC > b.matchDateTimeUTC) return 1
+      return -1
+    })
+    return matchesPerDay
+  }
+
   const getCurrentResult = (match) => {
     const results = match.matchResults;
     // get latest result (end of the array)
@@ -35,12 +50,12 @@
 
   const formatUtcDate = (utcDate) => {
     const date = new Date(utcDate);
-    return date.toLocaleDateString('de-DE', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+    return date.toLocaleDateString('de-DE', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false });
   }
 
   const onMatchdayChange = () => {
     console.log(selectedMatchDay)
-    matches = allMatches.filter(m => m.group.groupOrderID == selectedMatchDay)
+    matches = getMatchesForDay(selectedMatchDay)
   }
 </script>
 
@@ -55,7 +70,7 @@
       </select>
     </div>
     <div class="overflow-x-auto">
-      <table class="table table-zebra table-xs">
+      <table class="table table-zebra">
         <!-- head -->
         <thead>
           <tr>
@@ -73,13 +88,13 @@
           <!-- row 1 -->
           {#each matches as m}
           <tr>
-            <td><img src={m.team1.teamIconUrl} width="16px" height="16px" alt={m.team1.shortName}/></td>
+            <td><img src={m.team1.teamIconUrl} class="img-text" alt={m.team1.shortName}/></td>
             <td>{m.team1.teamName}</td>
             <td>{getCurrentResult(m)?.pointsTeam1 ?? ''}</td>
             <td>:</td>
             <td>{getCurrentResult(m)?.pointsTeam2 ?? ''}</td>
             <td>{m.team2.teamName}</td>
-            <td><img src={m.team2.teamIconUrl} width="16px" height="16px" alt={m.team2.shortName}/></td>
+            <td><img src={m.team2.teamIconUrl} class="img-text" alt={m.team2.shortName}/></td>
             <td>{formatUtcDate(m.matchDateTimeUTC)}</td>
           </tr>
           <!-- row 2 -->
@@ -92,5 +107,12 @@
 <style>
   .select-type {
     margin-left: 1rem;
+  }
+  .img-text {
+    height: 1.1em; /* Sets the icon height to match the font size of the text */
+    width: 1.1em; /* Sets the icon width to match the font size of the text */
+    vertical-align: middle;
+    margin-top:0em;
+    margin-bottom:0em;
   }
 </style>
