@@ -1,0 +1,96 @@
+<script>
+  import { onMount } from 'svelte';
+  import PageLayout from '../components/PageLayout.svelte'
+  let matches = []
+  let allMatches = []
+  let matchDays = []
+  let selectedMatchDay = {}
+  onMount(async () => {
+    const res = await fetch('/api/match')
+    allMatches = await res.json()
+    
+    matchDays = createMatchDays()
+    selectedMatchDay = matchDays[0].day
+    matches = allMatches.filter(m => m.group.groupOrderID == selectedMatchDay)
+  })
+
+  const createMatchDays = () => {
+    for (let i = 1; i <= 34; i++) {
+      const filler = i < 10 ? ' ' : '';
+      matchDays.push({
+        day: ''+i,
+        name: `${filler}${i} Spieltag`
+      })
+    }
+    console.log(matchDays);
+    return matchDays
+  }
+
+  const getCurrentResult = (match) => {
+    const results = match.matchResults;
+    // get latest result (end of the array)
+    const result = results[results.length - 1];
+    return result
+  }
+
+  const formatUtcDate = (utcDate) => {
+    const date = new Date(utcDate);
+    return date.toLocaleDateString('de-DE', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+  }
+
+  const onMatchdayChange = () => {
+    console.log(selectedMatchDay)
+    matches = allMatches.filter(m => m.group.groupOrderID == selectedMatchDay)
+  }
+</script>
+
+<PageLayout title="Soccer - Matches"  route="matches">
+  <div>
+    <div>
+      <b>Spieltag</b>
+      <select class="select select-bordered w-full max-w-xs select-type select-xs" bind:value={selectedMatchDay} on:change={onMatchdayChange}>
+        {#each matchDays as d}
+          <option value={d.day}>{d.name}</option>
+        {/each}
+      </select>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="table table-zebra table-xs">
+        <!-- head -->
+        <thead>
+          <tr>
+            <th></th>
+            <th><b>Heim</b></th>
+            <th></th>
+            <th><b>:</b></th>
+            <th></th>
+            <th><b>Gast</b></th>
+            <th></th>
+            <th><b>Datum</b></th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- row 1 -->
+          {#each matches as m}
+          <tr>
+            <td><img src={m.team1.teamIconUrl} width="16px" height="16px" alt={m.team1.shortName}/></td>
+            <td>{m.team1.teamName}</td>
+            <td>{getCurrentResult(m)?.pointsTeam1 ?? ''}</td>
+            <td>:</td>
+            <td>{getCurrentResult(m)?.pointsTeam2 ?? ''}</td>
+            <td>{m.team2.teamName}</td>
+            <td><img src={m.team2.teamIconUrl} width="16px" height="16px" alt={m.team2.shortName}/></td>
+            <td>{formatUtcDate(m.matchDateTimeUTC)}</td>
+          </tr>
+          <!-- row 2 -->
+          {/each}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</PageLayout>
+<style>
+  .select-type {
+    margin-left: 1rem;
+  }
+</style>
