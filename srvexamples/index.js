@@ -1,6 +1,7 @@
 
 const express = require('express')
 const path = require('path')
+
 // translation API
 const {Translate} = require('@google-cloud/translate').v2
 
@@ -61,6 +62,7 @@ app.post('/api/en2de', async (req, res) => {
 app.get('/api/google-trends', async (req, res) => {
   const trends = await readTrends()
   logger.info(`Trends found : ${trends.length}`)
+  console.log(trends)
   res.send({ amount: trends.length, results: trends})
 })
 
