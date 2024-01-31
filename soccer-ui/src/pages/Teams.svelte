@@ -11,7 +11,6 @@
     console.log('allMatches' + allMatches.length)
     const res = await fetch('/api/team');
     teams = await res.json();
-
   });
 
   const getNextMatchInfo = (team) => {

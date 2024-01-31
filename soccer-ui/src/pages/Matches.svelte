@@ -6,6 +6,7 @@
   let matchDays = []
   let selectedMatchDay = {}
   let olStatus = {}
+  
   onMount(async () => {
     const res = await fetch('/api/match')
     allMatches = await res.json()
