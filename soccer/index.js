@@ -11,8 +11,8 @@ const { readMatches, readTeams, readRankings, readStatus } = require('./db')
 
 const fs = require('fs')
 const path = require('path')
-
-
+// library for reading the .env file
+require('dotenv').config()
 
 
 // start express app
@@ -141,6 +141,12 @@ app.get('/api/match/:id', async (req, res) => {
   res.send(result)
 })
 
+
+/***
+ * here we start with an example of user authentication
+ */
+
+
 /*
 // creates a new match
 app.post('/api/match', (req, res) => {
@@ -204,6 +210,62 @@ app.get('/api/findteams', async (req, res) => {
   res.send(results)
 })
 
+
+
+
+// initialize the firebase auhtentication logic
+const admin = require('firebase-admin')
+const { initializeApp } = require('firebase/app')
+const { getAuth } = require('firebase-admin/auth')
+const adminApp = admin.initializeApp({
+  credential: admin.credential.applicationDefault(),
+  projectId: process.env.PROJECT_ID
+})
+const firebaseConfig = {
+  apiKey: process.env.AUTH_KEY,
+  authDomain: process.env.AUTH_URL,
+}
+initializeApp(firebaseConfig)
+
+// read the token from the request
+const getToken = (req) => {
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+    const token = req.headers.authorization.split(' ')[1]
+    return token
+  }
+  return ''
+}
+
+// verify the user based on the bearer token
+const verifyUser = async (req, res, next) => {
+  try {
+    const idToken = getToken(req)
+    req.token = await getAuth().verifyIdToken(idToken)
+    console.log('idToken', req.token)
+    // process the next steps
+    console.log('verify', 'success')
+    next()
+  } catch (err) {
+    res.status(401).json({ error: { code: '401', message: 'Not Authorized' } })
+    console.log(err)
+    console.log('verify', 'failed')
+  }
+}
+
+// profile will be loaded only for logged in and verified users
+app.get('/api/profile/', verifyUser, (req, res) => {
+  // TODO should be loaded from a database
+  const profile = {
+    name: 'Paul',
+    mail: 'paul.tanzer@live.de',
+    location: 'Heidelberg'
+  }
+  res.send(profile)
+})
+
+
+
+
 /**
  * initializing app
  */
@@ -212,23 +274,3 @@ app.listen(port, () => {
   console.log('Soccer app running')
 })
 
-
-/**
- * helper functions (will be replaced by database in future) 
- * */ 
-
-/*
-const loadTeams = () => {
-  const filepath = path.join(__dirname, 'data', 'teams.json')
-  const data = fs.readFileSync(filepath)
-  teams = JSON.parse(data)
-  console.log(`${teams.length} Teams loaded from ${filepath}`)
-}
-
-const loadMatches = () => {
-  const filepath = path.join(__dirname, 'data', 'matches.json')
-  const data = fs.readFileSync(filepath)
-  matches = JSON.parse(data)
-  console.log(`${matches.length} Matches loaded from ${filepath}`)
-}
-*/

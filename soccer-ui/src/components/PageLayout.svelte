@@ -47,6 +47,7 @@
         <button id="home" class="btn btn-outline nav-button" class:highlight={route === 'home'} on:click={() => replace('/')}>Home</button>
         <button id="matches" class="btn btn-outline nav-button" class:highlight={route === 'matches'} on:click={() => replace('/matches')}>Matches</button>
         <button id="teams" class="btn btn-outline nav-button" class:highlight={route === 'teams'} on:click={() => replace('/teams')}>Teams</button>        
+        <button id="profile" class="btn btn-outline nav-button" class:highlight={route === 'profile'} on:click={() => replace('/profile')}>Profile</button>  
         <!-- More links -->
       </div>
     </div>

@@ -84,3 +84,7 @@ GET {{server}}/api/findmatches?term=eintracht
 
 ### find matchew with id
 GET {{server}}/api/findteams?term=frank
+
+
+### get profile
+GET {{server}}/api/profile
