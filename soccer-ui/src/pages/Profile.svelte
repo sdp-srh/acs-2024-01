@@ -13,7 +13,7 @@
     sendEmailVerification,
   } from "firebase/auth";
   const firebaseConfig = {
-    apiKey: "AIzaSyD2TXO-mrUqFvjwmcc-a2HU6SKoNDdp_00",
+    apiKey: "xxx",
     authDomain: "acs-2023-02.firebaseapp.com",
   };
 
